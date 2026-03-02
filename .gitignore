@@ -1,0 +1,12 @@
+# Binaries
+*.exe
+*.out
+bin/
+
+# Go
+vendor/
+*.test
+
+# Env
+.env
+*.log
